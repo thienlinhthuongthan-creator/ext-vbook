@@ -6,8 +6,8 @@ vBook extensions by Linnea / tieu y tien.
 
 | Extension | Version | Install in vBook (paste this link) |
 |---|---|---|
-| 69shu (69shuba.com) | v15 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/69shu/plugin.zip |
-| SangTacViet (sangtacviet.com) | v11 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/sangtacviet/plugin.zip |
+| 69shu (69shuba.com) | v15 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/69shu/69shu-vbook-v15.zip |
+| SangTacViet (sangtacviet.com) | v11 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/sangtacviet/sangtacviet-vbook-v11.zip |
 
 ## How to install
 
