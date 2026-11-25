@@ -7,6 +7,11 @@
 1. Trong vBook: `︙ -> Phần mở rộng -> Nhập phần mở rộng`, chọn file zip này.
 2. Mở tab nguồn **SangTacViet**, dùng như nguồn truyện bình thường: tìm kiếm, trang chủ, thể loại, chi tiết, mục lục, đọc chương.
 
+## v12 (25/11/2026) — thêm bình luận độc giả ở trang giới thiệu truyện, test 56/56
+
+- Chị nhắc em quên bê bình luận vô. Giờ mở trang giới thiệu truyện là có tab bình luận: lấy từ API /mobile/comment.php?act=readcomment của STV, 10 bình luận/trang, có phân trang, hiện cả trả lời (dạng ↳ tên: nội dung), tên người bình luận + thời gian.
+- Kiểm chứng live: truyện Lâm thánh (qidian/1048640442) trang 1 và 2 đều trả code 100, 10 bình luận/trang, cả 2 base đều đọc được, không cần Referer. Chức năng khác không đổi.
+
 ## v11 (25/11/2026) — trang chủ đổi sang 6 tab giống ext QuocBao, bỏ tab Truyện Vip Free lỗi, test 50/50
 
 - Chị dặn giữ lại mấy tab như hình bên QuocBao. Trang chủ giờ có đúng 6 tab: Mới cập nhật, Đọc tuần, Đọc ngày, Đọc tổng, Mới nhập kho, Đề cử ngẫu nhiên, chỉ hiện truyện từ 50 chương trở lên (minc=50) như bên đó.
