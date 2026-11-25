@@ -1,0 +1,40 @@
+load("config.js");
+
+// Danh sach truyen tu API thu vien chinh thuc (dung chung cho trang chu
+// va the loai). Ten/the loai/tom tat bi ma hoa font -> decodeText.
+function execute(url, page) {
+  if (!page) page = "1";
+  var targetUrl = url.replace("{{page}}", page);
+  var response = fetchPage(targetUrl, { timeout: 20000, cache: 300 });
+  if (!response || !response.ok) {
+    return Response.error("Lỗi tải danh sách (HTTP " + (response ? response.status : "unknown") + ")");
+  }
+  var json = SafeJson(response);
+  var list = [];
+  if (json && json.data) {
+    var bookList = json.data.book_list || json.data.bookList || json.data.list;
+    if (bookList && Array.isArray(bookList)) {
+      bookList.forEach(function (b) {
+        var bookId = b.book_id || b.bookId || b.id;
+        var name = b.book_name || b.title || "";
+        if (!name || !bookId) return;
+        var cat = decodeText(b.category || "");
+        var score = b.score ? "⭐" + b.score : "";
+        // creation_status: 0 = da hoan, 1 = dang ra.
+        var done = (b.creation_status === 0 || b.creation_status === "0") ? "完结" : "";
+        var detail = [cat, score, done].filter(Boolean).join(" ");
+        list.push({
+          name: decodeText(name),
+          author: decodeText(b.author || ""),
+          cover: b.thumb_url || "",
+          description: decodeText(cleanText(b.abstract || "")),
+          detail: detail,
+          link: bookLink(bookId),
+          host: FANQIE_URL
+        });
+      });
+    }
+  }
+  var next = list.length >= 10 ? String(parseInt(page, 10) + 1) : "";
+  return Response.success(list, next);
+}

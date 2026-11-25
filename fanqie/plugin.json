@@ -1,0 +1,41 @@
+{
+  "config": {
+    "CONFIG_GENDER": {
+      "default": "-1=Tất cả",
+      "mode": "select",
+      "title": "Lọc giới tính",
+      "values": [
+        "-1=Tất cả",
+        "1=Truyện nam",
+        "0=Truyện nữ"
+      ]
+    },
+    "CONFIG_MAIN_GENRE_ONLY": {
+      "default": "true",
+      "mode": "toggle",
+      "subtitle": "Bật để hiển thị nhóm thể loại chính. Tắt để xem toàn bộ thể loại motif.",
+      "title": "Chỉ hiện thể loại chính"
+    },
+    "delay": 100,
+    "thread_num": 3
+  },
+  "metadata": {
+    "author": "Linnea / tieu y tien",
+    "description": "Đọc truyện chữ Trung Quốc từ Fanqie Novel (番茄小说) - kho truyện miễn phí lớn nhất Trung Quốc. Có lọc truyện nam / truyện nữ trong Cài đặt.",
+    "language": "javascript",
+    "locale": "zh_CN",
+    "name": "Cà Chua",
+    "regexp": "fanqienovel\\.com/page/[0-9]+",
+    "source": "https://fanqienovel.com",
+    "type": "chinese_novel",
+    "version": 2
+  },
+  "script": {
+    "chap": "chap.js",
+    "detail": "detail.js",
+    "genre": "genre.js",
+    "home": "home.js",
+    "search": "search.js",
+    "toc": "toc.js"
+  }
+}

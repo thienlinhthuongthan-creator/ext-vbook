@@ -7,7 +7,8 @@ vBook extensions by Linnea / tieu y tien.
 | Extension | Version | Install in vBook (paste this link) |
 |---|---|---|
 | 69shu (69shuba.com) | v15 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/69shu/69shu-vbook-v15.zip |
-| SangTacViet (sangtacviet.com) | v11 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/sangtacviet/sangtacviet-vbook-v11.zip |
+| SangTacViet (sangtacviet.com) | v13 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/sangtacviet/sangtacviet-vbook-v13.zip |
+| Cà Chua (fanqienovel.com) | v2 | https://raw.githubusercontent.com/thienlinhthuongthan-creator/ext-vbook/main/fanqie/fanqie-vbook-v2.zip |
 
 ## How to install
 
@@ -22,3 +23,4 @@ Each folder holds the extension source (flat layout, so vBook can also load
 
 - `69shu/` — plugin.json, README.md, *.js (icon: `icon.png`)
 - `sangtacviet/` — plugin.json, README.md, *.js (icon: `icon.png`)
+- `fanqie/` — plugin.json, README.md, *.js (icon: `icon.png`)
