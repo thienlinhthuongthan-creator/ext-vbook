@@ -7,6 +7,11 @@
 1. Trong vBook: `︙ -> Phần mở rộng -> Nhập phần mở rộng`, chọn file zip này.
 2. Mở tab nguồn **SangTacViet**, dùng như nguồn truyện bình thường: tìm kiếm, trang chủ, thể loại, chi tiết, mục lục, đọc chương.
 
+## v13 (25/11/2026) — sửa lỗi bình luận không hiện, test 60/60
+
+- v12 làm xong comment.js nhưng quên mất chỗ quan trọng nhất: detail.js phải trả về mảng `comments` thì vBook mới hiện tab Bình luận ở trang giới thiệu truyện. Không có mảng đó thì comment.js không bao giờ được gọi, nên chị mở truyện nào cũng không thấy gì, trong khi bên QuocBao hiện bình thường.
+- v13 sửa đúng chỗ đó: detail.js (cả đường JSON lẫn đường HTML) giờ trả về `comments: [{title: "Bình luận", input: <URL API comment đầy đủ>, script: "comment.js"}]`, học đúng cách QuocBao làm. comment.js cũng đọc được input là URL API đầy đủ, và trang 1 luôn trả next=2 để vBook hiện nút xem thêm.
+
 ## v12 (25/11/2026) — thêm bình luận độc giả ở trang giới thiệu truyện, test 56/56
 
 - Chị nhắc em quên bê bình luận vô. Giờ mở trang giới thiệu truyện là có tab bình luận: lấy từ API /mobile/comment.php?act=readcomment của STV, 10 bình luận/trang, có phân trang, hiện cả trả lời (dạng ↳ tên: nội dung), tên người bình luận + thời gian.

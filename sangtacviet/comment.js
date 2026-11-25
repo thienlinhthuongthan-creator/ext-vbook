@@ -28,20 +28,32 @@ function commentToHtml(text) {
 function execute(url, page) {
   var host = "";
   var bookId = "";
-  var parsed = parseBookUrl(url);
-  if (parsed) {
-    host = parsed.source;
-    bookId = parsed.bookId;
-  } else {
-    var q = parseQueryStr(url);
+  var order = "new";
+  var s = String(url || "");
+  // Input thuong la URL day du cua API comment do detail.js dua qua
+  // (vd .../mobile/comment.php?act=readcomment&host=qidian&bookid=...),
+  // hoac URL trang truyen /truyen/<host>/1/<id>/, hoac chuoi query.
+  var qPos = s.indexOf("?");
+  if (qPos >= 0) {
+    var q = parseQueryStr(s.substring(qPos + 1));
     host = clean(q.host || "");
     bookId = clean(q.bookid || q.hid || q.id || "");
+    order = clean(q.order || "new");
+  }
+  if (!host || !bookId) {
+    var parsed = parseBookUrl(s);
+    if (parsed) { host = parsed.source; bookId = parsed.bookId; }
+  }
+  if (!host || !bookId) {
+    var q2 = parseQueryStr(s);
+    host = clean(q2.host || "");
+    bookId = clean(q2.bookid || q2.hid || q2.id || "");
   }
   if (!host || !bookId) return Response.error("Không đọc được bình luận: thiếu thông tin truyện.");
   page = page ? parseInt(page, 10) : 1;
   if (!page || page < 1) page = 1;
   var start = (page - 1) * 10;
-  var path = "/mobile/comment.php?act=readcomment&host=" + encodeURIComponent(host) + "&bookid=" + encodeURIComponent(bookId) + "&start=" + start + "&order=new";
+  var path = "/mobile/comment.php?act=readcomment&host=" + encodeURIComponent(host) + "&bookid=" + encodeURIComponent(bookId) + "&start=" + start + "&order=" + encodeURIComponent(order);
   var found = fetchJsonOnBases(path, stvAppHeaders({ "Referer": bookUrl(host, bookId) }));
   if (!found || !found.json || !found.json.list) return Response.error("Không tải được bình luận, thử lại sau.");
   var list = found.json.list || [];
@@ -69,6 +81,11 @@ function execute(url, page) {
     comments.push({ name: name, content: contentHtml, description: time });
   }
   var next = null;
-  if (list.length >= 10) next = String(page + 1);
+  if (comments.length > 0) {
+    // Trang 1 luon tra next=2 de vBook hien nut "xem them" o tab binh luan
+    // (hoc tu ext QuocBao); cac trang sau chi co next khi du 10 muc.
+    if (page === 1) next = "2";
+    else if (list.length >= 10) next = String(page + 1);
+  }
   return Response.success(comments, next);
 }

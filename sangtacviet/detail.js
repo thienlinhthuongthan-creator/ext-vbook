@@ -22,6 +22,19 @@ function bookinfoFromHtml(html) {
   } catch (e2) { return null; }
 }
 
+// Tab "Binh luan" o trang gioi thieu truyen (v13): vBook chi hien muc
+// binh luan khi detail tra ve mang comments [{title, input, script}].
+// input la URL day du cua API comment; comment.js se doc host/bookid
+// tu query string cua no. (Hoc tu ext QuocBao sau khi dich nguoc -
+// v12 thieu cho nay nen comment.js khong bao gio duoc goi.)
+function commentInputUrl(host, bookId) {
+  return BASE_URL + "/mobile/comment.php?act=readcomment&host=" + encodeURIComponent(host) + "&bookid=" + encodeURIComponent(bookId) + "&start=0&order=new";
+}
+function commentSection(host, bookId) {
+  if (!host || !bookId) return [];
+  return [{ title: "Bình luận", input: commentInputUrl(host, bookId), script: "comment.js" }];
+}
+
 function execute(url) {
   // Duong 1 (moi, v4): JSON /mobile/bookinfo.php - ten tieng Viet, tac gia,
   // bia, mo ta, trang thai, so chuong deu co san trong JSON.
@@ -41,6 +54,8 @@ function execute(url) {
       if (book.status) lines.push("Trạng thái: " + clean(book.status));
       if (book.category) lines.push("Thể loại: " + clean(book.category));
       var status = clean(book.status || "");
+      var chost = clean(book.host || parsed.source || "");
+      var cbookId = clean(String(book.id || parsed.bookId || ""));
       return Response.success({
         name: name || clean(book.name || ""),
         cover: cover,
@@ -49,7 +64,8 @@ function execute(url) {
         description: info || "Không có mô tả.",
         detail: lines.join("<br>"),
         ongoing: status.indexOf("Hoàn thành") === -1,
-        genres: ""
+        genres: "",
+        comments: commentSection(chost, cbookId)
       });
     }
   }
@@ -112,6 +128,8 @@ function execute(url) {
   var st = txt(selOne(doc, "#bookstatus"));
   if (st.indexOf("Hoàn thành") !== -1) ongoing = false;
 
+  var chost = (info && info.host) || (parsed && parsed.source) || "";
+  var cbookId = (info && info.id) || (parsed && parsed.bookId) || "";
   return Response.success({
     name: name,
     cover: cover,
@@ -120,6 +138,7 @@ function execute(url) {
     description: desc,
     detail: detail,
     ongoing: ongoing,
-    genres: genres
+    genres: genres,
+    comments: commentSection(chost, cbookId)
   });
 }
